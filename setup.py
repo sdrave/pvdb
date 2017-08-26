@@ -6,8 +6,7 @@ setup(
     description="Python visual debugger inspired by Philip Guo's Python Tutor",
     classifiers=[
         'Development Status :: 3 - Alpha',
-        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)'
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Debuggers',
         'Intended Audience :: Education',
