@@ -10,5 +10,6 @@ setup(
     license='GPL-3.0+',
     py_modules=['pvdb'],
     entry_points={'console_scripts': ['pvdb=pvdb:main']},
+    install_requires=['pillow', 'graphviz'],
     zip_save=True
 )
