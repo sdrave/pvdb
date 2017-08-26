@@ -9,5 +9,6 @@ setup(
     autor_email='pvdb@stephanrave.de',
     license='GPL-3.0+',
     py_modules=['pvdb'],
-    entry_points={'console_scripts': ['pvdb=pvdb:main']}
+    entry_points={'console_scripts': ['pvdb=pvdb:main']},
+    zip_save=True
 )
