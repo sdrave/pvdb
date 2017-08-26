@@ -4,6 +4,15 @@ setup(
     name='pvdb',
     version='0.1',
     description="Python visual debugger inspired by Philip Guo's Python Tutor",
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)'
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3',
+        'Topic :: Software Development :: Debuggers',
+        'Intended Audience :: Education',
+        'Intended Audience :: Developers'
+    ],
     url='https://github.com/sdrave/pvdb',
     author='Stephan Rave',
     autor_email='pvdb@stephanrave.de',
