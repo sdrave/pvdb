@@ -15,8 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from idlelib.ColorDelegator import ColorDelegator
-from idlelib.Percolator import Percolator
+try:
+    from idlelib.ColorDelegator import ColorDelegator
+except ImportError:
+    from idlelib.colorizer import ColorDelegator
+try:
+    from idlelib.Percolator import Percolator
+except ImportError:
+    from idlelib.percolator import Percolator
+
 from io import BytesIO
 from pdb import Pdb
 import sys

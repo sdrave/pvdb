@@ -2,12 +2,13 @@ from setuptools import setup
 
 setup(
     name='pvdb',
-    version='0.1',
+    version='0.1.1',
     description="Python visual debugger inspired by Philip Guo's Python Tutor",
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Software Development :: Debuggers',
         'Intended Audience :: Education',
         'Intended Audience :: Developers'
