@@ -34,9 +34,19 @@ from graphviz import Digraph
 from PIL import Image
 from PIL.ImageTk import PhotoImage
 
+try:
+    import numpy as np
+    HAVE_NUMPY = True
+except ImportError:
+    HAVE_NUMPY = False
+
+
 TEXTSIZE = '13'
 CLASSSIZE = '9'
+NUMPYSIZE = '9'
 ARROWSIZE = '0.7'
+
+# Colorbrewer Set3 colors
 FRAMECOLOR = '#ffffb3'
 SCALARCOLOR = '#80b1d3'
 SIGLETONCOLOR = '#b3de69'
@@ -44,6 +54,7 @@ LISTCOLOR = '#fb8072'
 TUPLECOLOR = '#fdb462'
 DICTCOLOR = '#bebada'
 SETCOLOR = '#8dd3c7'
+NUMPYCOLOR = '#fccde5'
 
 
 class FrameVisualizer:
@@ -98,7 +109,7 @@ class FrameVisualizer:
 
         if type(obj) in (int, float, str):
             label += '<tr><td border="1" width="10" bgcolor="{}">{}</td></tr>'.format(SCALARCOLOR, obj)
-        elif obj in (None, True, False):
+        elif type(obj) in (type(None), bool):
             label += '<tr><td border="1" width="10" bgcolor="{}">{}</td></tr>'.format(SIGLETONCOLOR, obj)
         elif type(obj) in (list, tuple):
             label += '<tr>'
@@ -118,6 +129,25 @@ class FrameVisualizer:
                 label += '<tr><td border="1" width="3"></td></tr>'
         elif type(obj) is set:
             label += '<tr><td border="1" width="10" port="0" bgcolor="{}">{{{}}}</td></tr>'.format(SETCOLOR, len(obj))
+        elif HAVE_NUMPY and type(obj) is np.ndarray:
+            label += '<tr><td border="1" width="10" bgcolor="{}">{}: {}</td></tr>'.format(
+                NUMPYCOLOR, 'x'.join([str(s) for s in obj.shape]), obj.dtype
+            )
+            if 1 <= obj.ndim <= 2 and max(obj.shape) <= 5 and min(obj.shape) > 0 and obj.dtype is not object:
+                o = obj.reshape((1, -1)) if obj.ndim == 1 else obj
+                label += '<tr><td border="1" width="10" bgcolor="{}"><font point-size="{}">'.format(
+                    NUMPYCOLOR, NUMPYSIZE
+                )
+                label += '<table cellpadding="0" cellspacing="0" border="0">'
+                for row in o:
+                    label += '<tr>'
+                    for val in row:
+                        label += '<td>{}</td>'.format(val)
+                    label += '</tr>'
+                label += '</table></font></td></tr>'
+            if obj.base is not None:
+                self._add_object(obj.base)
+                label += '<tr><td border="1" width="10" port="base" bgcolor="{}">base</td></tr>'.format(NUMPYCOLOR)
         else:
             label += '<tr><td border="1" width="10">&nbsp;</td></tr>'
         label += '</table></td></tr></table></font>>'
@@ -135,6 +165,9 @@ class FrameVisualizer:
             for v in obj:
                 self._add_object(v)
                 self.graph.edge('obj_{}:0'.format(id(obj)), 'obj_{}:__INPUT__'.format(id(v)), arrowsize=ARROWSIZE)
+        elif HAVE_NUMPY and type(obj) is np.ndarray and obj.base is not None:
+            self.graph.edge('obj_{}:base:e'.format(id(obj)), 'obj_{}:__INPUT__'.format(id(obj.base)), arrowsize=ARROWSIZE)
+
 
 
 def get_frame_data(frame):
