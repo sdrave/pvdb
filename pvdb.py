@@ -176,9 +176,7 @@ def get_frame_data(frame):
     while True:
         frames.insert(0, (frame.f_code.co_name,
                           {k: v for k, v in frame.f_locals.items()
-                           if not (k.startswith('__') or
-                                   isinstance(v, type) or
-                                   isinstance(v, FunctionType))}))
+                           if not k.startswith('__')}))
         frame = frame.f_back
         if not frame:
             break
