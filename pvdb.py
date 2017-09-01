@@ -102,6 +102,7 @@ class FrameVisualizer:
     def _add_object(self, obj):
         if id(obj) in self.seen_objects:
             return
+        self.seen_objects.add(id(obj))
         label = '<<font point-size="{}"><table cellpadding="0" cellspacing="0" border="0">' \
                 '<tr><td align="left"><font point-size="{}">{}</font></td></tr>'.format(TEXTSIZE, CLASSSIZE,
                                                                                         type(obj).__name__)
