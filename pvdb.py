@@ -57,6 +57,11 @@ SETCOLOR = '#8dd3c7'
 NUMPYCOLOR = '#fccde5'
 
 
+import builtins
+import tkinter.simpledialog
+builtins.input = lambda msg: tk.simpledialog.askstring('Input', msg)
+
+
 class FrameVisualizer:
 
     def __init__(self, frames):
