@@ -89,8 +89,8 @@ class FrameVisualizer:
             label += '<tr><td align="left"><font point-size="{}">{}</font></td></tr>'.format(CLASSSIZE, name)
             if entries:
                 for k in sorted(entries):
-                    label += '<tr><td border="1" width="80" bgcolor="{}" port="{}_{}">{}</td></tr>'.format(
-                        FRAMECOLOR, name, k, k
+                    label += '<tr><td border="1" width="80" bgcolor="{}" port="frame{}_{}">{}</td></tr>'.format(
+                        FRAMECOLOR, id(entries), k, k
                     )
             else:
                 label += '<tr><td border="1" width="80" bgcolor="{}">&nbsp;</td></tr>'.format(FRAMECOLOR)
@@ -102,7 +102,7 @@ class FrameVisualizer:
         for name, entries in self.frames:
             for k, v in sorted(entries.items()):
                 self._add_object(v)
-                self.graph.edge('frames:{}_{}'.format(name, k), 'obj_{}:__INPUT__:w'.format(id(v)), arrowsize=ARROWSIZE)
+                self.graph.edge('frames:frame{}_{}'.format(id(entries), k), 'obj_{}:__INPUT__:w'.format(id(v)), arrowsize=ARROWSIZE)
 
     def _add_object(self, obj):
         if id(obj) in self.seen_objects:

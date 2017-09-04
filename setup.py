@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='pvdb',
-    version='0.2.2',
+    version='0.2.3',
     description="Python visual debugger inspired by Philip Guo's Python Tutor",
     classifiers=[
         'Development Status :: 3 - Alpha',
