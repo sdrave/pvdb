@@ -62,6 +62,18 @@ import tkinter.simpledialog
 builtins.input = lambda msg: tk.simpledialog.askstring('Input', msg)
 
 
+# some monkey patching to make the graphviz module find dot
+# in case it is installed in a nonstandard location (PATH is not searched)
+import platform
+if platform.system() == 'Windows':
+    import subprocess
+    import graphviz
+    ENGINE = subprocess.check_output(['where', 'dot']).decode().strip().lower()
+    graphviz.ENGINES.add(ENGINE)
+else:
+    ENGINE = 'dot'
+
+
 class FrameVisualizer:
 
     def __init__(self, frames):
@@ -77,7 +89,7 @@ class FrameVisualizer:
         if size:
             self.graph.attr(size='{},{}'.format(size[0]/100, size[1]/100), ratio='compress')
         # print(self.graph)
-        # self.graph.engine = 'neato'
+        self.graph.engine = ENGINE
         # print(self.graph.pipe('dot').decode('utf8'))
         out = self.graph.pipe('png')
         stream = BytesIO(out)
