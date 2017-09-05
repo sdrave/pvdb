@@ -322,7 +322,8 @@ class Stepper(Pdb):
 def main():
     import sys
     import pvdb
-    pvdb.Stepper(sys.argv[1]).start()
+    sys.argv = sys.argv[1:]
+    pvdb.Stepper(sys.argv[0]).start()
 
 
 if __name__ == '__main__':
